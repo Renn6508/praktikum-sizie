@@ -17,7 +17,7 @@ export async function getProducts() {
         // Kita langsung pakai data mentah, nanti dirapikan di UI
         resolve(results.data as Product[]);
       },
-      error: (err) => {
+      error: (err: any) => {
         reject(err);
       },
     });
