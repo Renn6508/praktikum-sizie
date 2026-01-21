@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 
-// 1. TENTUKAN NOMOR WA DISINI (Format: 628xxx, tanpa + atau 0 di depan)
+
 const NOMOR_WA = "6281234567890";
 
 export default function Home() {
@@ -14,62 +14,123 @@ export default function Home() {
       <Navbar />
 
       {/* --- HERO SECTION --- */}
-      <section className="relative h-screen flex items-center text-white z-20 overflow-visible">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/images/background-hero.jpg"
-            alt="Hero Seblak Sultan"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent" />
-        </div>
+      <section className="relative min-h-screen bg-white overflow-hidden flex flex-col font-sans">
+      
+      <div className="absolute top-0 right-0 w-[45%] h-full bg-red-800 rounded-bl-[150px] z-0 hidden lg:block shadow-2xl" />
 
-        <div className="container mx-auto px-6 z-10 relative mt-16 md:mt-0">
-          <div className="max-w-3xl animate-fade-in-up">
-            <span className="text-yellow-400 font-bold tracking-widest uppercase mb-2 block text-sm md:text-base">
-              Praktis • Higienis • Pedas Nampol
+      {/* 3. Kontainer Utama Grid */}
+      <div className="container mx-auto px-6 flex-grow flex items-center z-10 relative mt-8 lg:mt-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-center">
+          
+          {/* --- KOLOM KIRI (TEKS) --- */}
+          <div className="max-w-xl animate-fade-in-up">
+            <span className="inline-block py-1 px-3 rounded-full bg-red-100 text-red-600 text-sm font-bold tracking-wider mb-4 border border-red-200">
+              🔥 PEDASNYA BIKIN NAGIH
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            
+            <h1 className="text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] mb-6">
               Seblak Frozen <br />
-              <span className="text-red-500">Kualitas Sultan!</span>
+              <span className="text-red-800">Kualitas Sultan!</span>
             </h1>
-            <p className="text-gray-200 text-lg md:text-xl mb-8 max-w-xl leading-relaxed">
-              Solusi nikmat makan seblak di rumah tanpa ribet. Tinggal masak, rasakan pedasnya yang bikin nagih!
+
+            <p className="text-slate-500 text-lg leading-relaxed mb-8">
+              Nikmati sensasi kuah kencur yang otentik dan pedas nampol. 
+              Praktis, higienis, dan siap menemani waktu santai Anda di rumah.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* Tombol Action */}
+            <div className="flex flex-wrap gap-4 mb-10">
               <Link 
                 href="#produk" 
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider transition-all shadow-lg shadow-red-900/50 hover:scale-105 text-center"
+                className="bg-red-800 hover:bg-red-900 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-red-200 transition-all hover:scale-105 hover:shadow-red-400"
               >
                 Lihat Menu
               </Link>
               <Link 
                 href="#tentang-kami" 
-                className="group flex items-center justify-center gap-2 border-2 border-white/30 px-8 py-4 rounded-full font-bold hover:bg-white hover:text-red-900 uppercase tracking-wider transition-all text-center"
+                className="px-8 py-4 rounded-full font-bold text-slate-600 border-2 border-slate-200 hover:border-red-600 hover:text-red-600 transition-all bg-white"
               >
                 Tentang Kami
               </Link>
             </div>
+
+            {/* Info Cards (Fitur Unggulan) */}
+            <div className="flex flex-col sm:flex-row gap-6">
+              {/* Card 1 */}
+              <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-lg border border-slate-100">
+                <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-600">
+                  {/* Icon Petir/Cepat */}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-800 text-sm">Dikirim Cepat</h4>
+                  <p className="text-xs text-slate-400">Dalam 30 Menit</p>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-lg border border-slate-100">
+                <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-600">
+                   {/* Icon Api/Pedas */}
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.047 8.287 8.287 0 009 9.601a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.468 5.99 5.99 0 00-1.925 3.547 5.975 5.975 0 01-2.133-1.001A3.75 3.75 0 0012 18z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-800 text-sm">Pedas Nampol</h4>
+                  <p className="text-xs text-slate-400">Level Bisa Diatur</p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          {/* --- KOLOM KANAN (GAMBAR) --- */}
+          <div className="relative h-[400px] lg:h-[650px] w-full flex items-center justify-center">
+             
+             {/* Gambar Utama (Bowl) - Pastikan PNG Transparan */}
+             <div className="relative w-[320px] h-[320px] lg:w-[550px] lg:h-[550px] z-20">
+               <Image
+                 src="/images/seblak-bowl.png" // Ganti path sesuai gambar Anda
+                 alt="Seblak Sultan Bowl"
+                 fill
+                 className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:scale-105 transition duration-500 ease-in-out"
+                 priority
+               />
+             </div>
+
+             {/* Dekorasi Floating (Cabe) */}
+             <div className="absolute top-20 right-10 w-20 h-20 animate-bounce z-30 hidden lg:block opacity-90">
+                <Image src="/images/chili-floating.png" alt="cabe" width={80} height={80} className="object-contain rotate-12" />
+             </div>
+             
+             {/* Dekorasi Floating (Kerupuk/Bumbu) */}
+             <div className="absolute bottom-24 left-0 w-16 h-16 animate-pulse z-30 hidden lg:block opacity-90">
+                <Image src="/images/spice-leaf.png" alt="daun" width={60} height={60} className="object-contain -rotate-45" />
+             </div>
+
+          </div>
+
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* --- TENTANG KAMI & KOMPOSISI --- */}
-      <section id="tentang-kami" className="py-24 bg-white scroll-mt-20">
+      <section id="tentang-kami" className="py-18 bg-white scroll-mt-12">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center gap-16">
             
             {/* Foto Persegi */}
-            <div className="w-full md:w-1/2 relative aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-gray-200">
+            {/* <div className="w-full md:w-1/2 relative aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-gray-200"> */}
+            <div className="w-full h-64 md:w-[400px] md:h-[400px] relative rounded-2xl overflow-hidden shadow-2xl">
                {/* Ganti dengan foto kemasan Standing Pouch */}
               <Image 
                 src="/images/logo.png" 
                 alt="Kemasan Standing Pouch Seblak Sultan" 
                 fill 
-                className="object-cover hover:scale-110 transition duration-500"
+                className="object-cover hover:scale-110 transition duration-500 "
               />
             </div>
 
@@ -103,7 +164,7 @@ export default function Home() {
       </section>
 
       {/* --- PRODUK --- */}
-      <section id="produk" className="py-24 bg-gradient-to-b from-gray-50 to-gray-100 scroll-mt-20">
+      <section id="produk" className="py-18 bg-gradient-to-b from-gray-50 to-gray-100 scroll-mt-8">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Daftar Menu <span className="text-red-600">Frozen</span></h2>
@@ -113,8 +174,6 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {staticProducts.map((product) => {
               
-              // 2. LOGIKA PEMBUATAN PESAN OTOMATIS
-              // Hasil: "Halo kak, saya mau pesan Seblak Frozen Original. Masih ready?"
               const pesan = `Halo Admin Blessing Store, saya mau pesan *${product.Name}*. Apakah masih ready?`;
               
               // 3. GENERATE LINK WA
@@ -169,7 +228,7 @@ export default function Home() {
       </section>
 
       {/* --- VISI MISI --- */}
-      <section id="visi-misi" className="py-24 bg-white scroll-mt-20">
+      <section id="visi-misi" className="py-18 bg-white scroll-mt-12">
         <div className="container mx-auto px-6">
            <div className="grid md:grid-cols-2 gap-12 items-start">
               
@@ -219,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* --- KONTAK FINAL --- */}
-      <section id="kontak" className="py-24 bg-red-800 text-white relative overflow-hidden">
+      <section id="kontak" className="py-18 bg-red-800 text-white relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Mau Jadi Reseller?</h2>
           <p className="text-red-100 text-lg mb-10 max-w-2xl mx-auto">
