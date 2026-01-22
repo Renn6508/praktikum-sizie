@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { X, Clock, Flame, ChefHat, ShoppingCart, Info, CheckCircle2 } from 'lucide-react';
+import { X, Clock, Flame, ChefHat, ShoppingCart, Info, CheckCircle2 , } from 'lucide-react';
 import { staticProducts } from "@/lib/data";
 
 interface Product {
@@ -106,9 +106,10 @@ const ProductSection = () => {
 
                     <button
                       onClick={() => setSelectedProduct(product)}
-                      className="bg-slate-900 text-white p-3 rounded-2xl hover:bg-red-600 transition-colors shadow-lg hover:shadow-red-200 group-hover:scale-110 duration-300"
+                      className="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-red-600 transition-all shadow-lg hover:shadow-red-200 flex items-center gap-2 group-hover:scale-105 duration-300"
                     >
-                      <Info className="w-5 h-5" />
+                      <span className="text-sm font-bold">Lihat Produk</span>
+                      <Info className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
