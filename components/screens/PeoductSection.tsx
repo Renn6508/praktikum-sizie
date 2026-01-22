@@ -4,8 +4,23 @@ import Image from 'next/image';
 import { X, Clock, Flame, ChefHat, ShoppingCart, Info, CheckCircle2 } from 'lucide-react';
 import { staticProducts } from "@/lib/data";
 
+// 1. Definisikan Tipe Data Produk (Interface)
+interface Product {
+  id: number;
+  Name: string;
+  Category: string;
+  Price: number | string;
+  Thumbnail: string;
+  VariantName: string;
+  Description: string;
+  CookingTime: string;
+  Spiciness: number;
+  Ingredients: string[];
+  Instructions: string;
+}
+
 const ProductSection = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Mencegah scroll pada body website utama saat modal terbuka
   useEffect(() => {
@@ -14,12 +29,16 @@ const ProductSection = () => {
     } else {
       document.body.style.overflow = 'unset';
     }
+    // Cleanup saat component unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [selectedProduct]);
 
   // Nomor WA Admin
   const NOMOR_WA = "6281234567890"; 
 
-  const getWALink = (product) => {
+  const getWALink = (product: Product) => {
     const text = `Halo Admin Blessing Store, saya mau pesan *${product.Name}*. Apakah ready stock?`;
     return `https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(text)}`;
   };
@@ -47,7 +66,7 @@ const ProductSection = () => {
 
           {/* Grid Produk */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {staticProducts.map((product) => (
+            {staticProducts.map((product: any) => (
               <div
                 key={product.id}
                 className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-100/50 hover:-translate-y-2 transition-all duration-300 flex flex-col border border-slate-100 group"
@@ -107,20 +126,22 @@ const ProductSection = () => {
         </div>
       </section>
 
-      {/* --- MODAL DETAIL PRODUK (REDESIGNED) --- */}
+      {/* --- MODAL DETAIL PRODUK --- */}
       {selectedProduct && (
-       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6 h-screen w-screen">
+          
           {/* Backdrop Blur */}
           <div 
             className="absolute inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
             onClick={() => setSelectedProduct(null)}
           ></div>
 
-          {/* Modal Content */}
+          {/* Modal Content - FIXED SCROLLING ISSUE */}
           <div 
-      className="bg-white w-full max-w-5xl rounded-[2rem] shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden max-h-[85vh] md:h-auto md:max-h-[90vh] animate-in zoom-in-95 duration-300 ease-out"
-    >
-            {/* Tombol Close (Floating) */}
+            className="bg-white w-full max-w-5xl rounded-[2rem] shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden max-h-[85vh] md:max-h-[90vh] animate-in zoom-in-95 duration-300 ease-out"
+          >
+            
+            {/* Tombol Close */}
             <button 
               onClick={() => setSelectedProduct(null)}
               className="absolute top-4 right-4 z-50 bg-white/50 backdrop-blur-md p-2 rounded-full hover:bg-red-500 hover:text-white transition-all border border-white/20 shadow-sm"
@@ -128,8 +149,9 @@ const ProductSection = () => {
               <X className="w-6 h-6" />
             </button>
 
-            {/* KIRI: Gambar (Sticky di Desktop) */}
-            <div className="w-full md:w-[45%] bg-slate-100 relative h-[250px] md:h-auto md:min-h-[600px]">
+            {/* KIRI: Gambar */}
+            {/* shrink-0 PENTING: Agar gambar tidak tergencet dan membuat layout rusak */}
+            <div className="w-full md:w-[45%] bg-slate-100 relative h-[200px] md:h-auto shrink-0">
               <Image
                 src={selectedProduct.Thumbnail}
                 alt={selectedProduct.Name}
@@ -139,11 +161,12 @@ const ProductSection = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent md:hidden"></div>
             </div>
 
-            {/* KANAN: Scrollable Content */}
-            <div className="w-full md:w-[55%] flex flex-col bg-white h-full max-h-[calc(95vh-250px)] md:max-h-[90vh]">
+            {/* KANAN: Konten Scrollable */}
+            {/* min-h-0 PENTING: Agar flex item tahu kapan harus scroll (tidak memanjang tanpa batas) */}
+            <div className="flex-1 flex flex-col bg-white min-h-0 md:w-[55%]">
               
               {/* Scrollable Area */}
-              <div className="flex-1 overflow-y-auto p-6 md:p-10 pb-24 md:pb-10 custom-scrollbar">
+              <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
                 
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -156,7 +179,7 @@ const ProductSection = () => {
                 </div>
 
                 {/* Title & Price */}
-                <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2 leading-tight">
+                <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-2 leading-tight">
                   {selectedProduct.Name}
                 </h3>
                 <div className="flex items-baseline gap-2 mb-6 border-b border-slate-100 pb-6">
@@ -221,8 +244,9 @@ const ProductSection = () => {
                 </div>
               </div>
 
-              {/* STICKY FOOTER ACTION (Penting untuk UX Mobile) */}
-              <div className="p-4 md:p-6 border-t border-slate-100 bg-white md:bg-white/90 md:backdrop-blur-sm z-20">
+              {/* STICKY FOOTER ACTION */}
+              {/* shrink-0 PENTING: Agar footer tidak mengecil saat discroll */}
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-white z-20 shrink-0">
                 <a
                   href={getWALink(selectedProduct)}
                   target="_blank"
