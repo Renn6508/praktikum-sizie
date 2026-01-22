@@ -70,7 +70,7 @@ export default function Home() {
 
                 {/* Tombol Lihat Produk - Mengganti PlayCircle dengan ShoppingBag */}
                 <Link
-                  href="/produk"
+                  href="#produk"
                   className="flex items-center gap-3 px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-700 font-bold hover:border-red-200 hover:text-red-600 hover:bg-red-50 transition-all shadow-sm"
                 >
                   <ShoppingBag className="w-5 h-5" />

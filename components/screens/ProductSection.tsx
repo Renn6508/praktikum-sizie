@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { X, Clock, Flame, ChefHat, ShoppingCart, Info, CheckCircle2 } from 'lucide-react';
 import { staticProducts } from "@/lib/data";
 
-// --- 1. DEFINISI TIPE DATA (PENTING UNTUK TYPESCRIPT) ---
 interface Product {
   id: number;
   Name: string;
@@ -34,7 +33,6 @@ const ProductSection = () => {
 
   const NOMOR_WA = "6281234567890"; 
 
-  // --- 2. PERBAIKAN UTAMA DI SINI (tambah ': Product') ---
   const getWALink = (product: Product) => {
     const text = `Halo Admin Blessing Store, saya mau pesan *${product.Name}*. Apakah ready stock?`;
     return `https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(text)}`;
