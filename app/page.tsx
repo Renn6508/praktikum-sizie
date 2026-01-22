@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Link from "next/link";
 import Footer from "../components/Footer";
 import { Flame, ArrowRight, Star, PlayCircle, MessageSquare,ShoppingBag } from "lucide-react";
-import ProductSection from "@/components/screens/PeoductSection";
+import ProductSection from "@/components/screens/ProductSection";
 
 const NOMOR_WA = "6281234567890";
 

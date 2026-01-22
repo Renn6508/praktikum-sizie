@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { X, Clock, Flame, ChefHat, ShoppingCart, Info, CheckCircle2 } from 'lucide-react';
 import { staticProducts } from "@/lib/data";
 
-// 1. Definisikan Tipe Data Produk (Interface)
+// --- 1. DEFINISI TIPE DATA (PENTING UNTUK TYPESCRIPT) ---
 interface Product {
   id: number;
   Name: string;
@@ -13,31 +13,28 @@ interface Product {
   Thumbnail: string;
   VariantName: string;
   Description: string;
-  CookingTime: string;
-  Spiciness: number;
-  Ingredients: string[];
-  Instructions: string;
+  CookingTime?: string; // Tanda tanya (?) artinya boleh kosong
+  Spiciness?: number;
+  Ingredients?: string[];
+  Instructions?: string;
 }
 
 const ProductSection = () => {
+  // State dengan tipe data Product atau null
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Mencegah scroll pada body website utama saat modal terbuka
   useEffect(() => {
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    // Cleanup saat component unmount
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    return () => { document.body.style.overflow = 'unset'; };
   }, [selectedProduct]);
 
-  // Nomor WA Admin
   const NOMOR_WA = "6281234567890"; 
 
+  // --- 2. PERBAIKAN UTAMA DI SINI (tambah ': Product') ---
   const getWALink = (product: Product) => {
     const text = `Halo Admin Blessing Store, saya mau pesan *${product.Name}*. Apakah ready stock?`;
     return `https://wa.me/${NOMOR_WA}?text=${encodeURIComponent(text)}`;
@@ -54,7 +51,6 @@ const ProductSection = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           
-          {/* Header Section */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">
               Daftar Menu <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Frozen</span>
@@ -64,14 +60,13 @@ const ProductSection = () => {
             </p>
           </div>
 
-          {/* Grid Produk */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Menggunakan 'any' di map untuk menghindari konflik tipe dengan data dummy */}
             {staticProducts.map((product: any) => (
               <div
                 key={product.id}
                 className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-red-100/50 hover:-translate-y-2 transition-all duration-300 flex flex-col border border-slate-100 group"
               >
-                {/* Gambar Card */}
                 <div 
                   className="relative h-64 w-full overflow-hidden rounded-t-[2rem] bg-slate-100 cursor-pointer" 
                   onClick={() => setSelectedProduct(product)}
@@ -90,7 +85,6 @@ const ProductSection = () => {
                   </div>
                 </div>
 
-                {/* Info Card */}
                 <div className="p-6 flex-1 flex flex-col relative">
                   <h3 
                     className="text-xl font-bold text-slate-900 mb-2 cursor-pointer group-hover:text-red-600 transition-colors"
@@ -130,18 +124,16 @@ const ProductSection = () => {
       {selectedProduct && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6 h-screen w-screen">
           
-          {/* Backdrop Blur */}
           <div 
             className="absolute inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
             onClick={() => setSelectedProduct(null)}
           ></div>
 
-          {/* Modal Content - FIXED SCROLLING ISSUE */}
+          {/* --- 3. MODAL CONTAINER (Fix Scroll & Layout) --- */}
           <div 
             className="bg-white w-full max-w-5xl rounded-[2rem] shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden max-h-[85vh] md:max-h-[90vh] animate-in zoom-in-95 duration-300 ease-out"
           >
             
-            {/* Tombol Close */}
             <button 
               onClick={() => setSelectedProduct(null)}
               className="absolute top-4 right-4 z-50 bg-white/50 backdrop-blur-md p-2 rounded-full hover:bg-red-500 hover:text-white transition-all border border-white/20 shadow-sm"
@@ -149,8 +141,7 @@ const ProductSection = () => {
               <X className="w-6 h-6" />
             </button>
 
-            {/* KIRI: Gambar */}
-            {/* shrink-0 PENTING: Agar gambar tidak tergencet dan membuat layout rusak */}
+            {/* KIRI: Gambar (shrink-0 agar tidak tergencet) */}
             <div className="w-full md:w-[45%] bg-slate-100 relative h-[200px] md:h-auto shrink-0">
               <Image
                 src={selectedProduct.Thumbnail}
@@ -158,17 +149,16 @@ const ProductSection = () => {
                 fill
                 className="object-cover"
               />
+              {/* Overlay gradient mobile */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent md:hidden"></div>
             </div>
 
-            {/* KANAN: Konten Scrollable */}
-            {/* min-h-0 PENTING: Agar flex item tahu kapan harus scroll (tidak memanjang tanpa batas) */}
+            {/* KANAN: Konten (min-h-0 agar flex child bisa scroll) */}
             <div className="flex-1 flex flex-col bg-white min-h-0 md:w-[55%]">
               
               {/* Scrollable Area */}
               <div className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
                 
-                {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-4">
                    <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-800 text-xs font-bold border border-yellow-200">
                     ✨ {selectedProduct.VariantName}
@@ -178,7 +168,6 @@ const ProductSection = () => {
                    </span>
                 </div>
 
-                {/* Title & Price */}
                 <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-2 leading-tight">
                   {selectedProduct.Name}
                 </h3>
@@ -189,12 +178,10 @@ const ProductSection = () => {
                    <span className="text-slate-400 text-sm">/ pouch (±250gr)</span>
                 </div>
 
-                {/* Description */}
                 <p className="text-slate-600 text-lg leading-relaxed mb-8">
                   {selectedProduct.Description}
                 </p>
 
-                {/* Info Grid */}
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   <div className="p-4 rounded-2xl bg-orange-50 border border-orange-100">
                      <div className="flex items-center gap-2 mb-2">
@@ -218,7 +205,6 @@ const ProductSection = () => {
                   </div>
                 </div>
 
-                {/* Ingredients */}
                 {selectedProduct.Ingredients && (
                   <div className="mb-8">
                     <h4 className="font-bold text-slate-900 mb-3 text-sm uppercase tracking-wide">Komposisi Premium</h4>
@@ -233,7 +219,6 @@ const ProductSection = () => {
                   </div>
                 )}
 
-                {/* Instructions */}
                 <div className="bg-slate-50 rounded-2xl p-5 border border-dashed border-slate-300">
                    <h4 className="font-bold text-slate-900 flex items-center gap-2 mb-3">
                       <ChefHat className="w-5 h-5 text-slate-500" /> Cara Penyajian
@@ -244,8 +229,7 @@ const ProductSection = () => {
                 </div>
               </div>
 
-              {/* STICKY FOOTER ACTION */}
-              {/* shrink-0 PENTING: Agar footer tidak mengecil saat discroll */}
+              {/* Footer Tombol (shrink-0 agar tidak ikut mengecil) */}
               <div className="p-4 md:p-6 border-t border-slate-100 bg-white z-20 shrink-0">
                 <a
                   href={getWALink(selectedProduct)}
