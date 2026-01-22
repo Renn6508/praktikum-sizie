@@ -56,19 +56,19 @@ const Footer = () => {
                 <div className="bg-white/5 p-2 rounded-lg group-hover:bg-red-600 transition-colors">
                     <MapPin className="text-yellow-500 group-hover:text-white shrink-0 transition-colors" size={18} />
                 </div>
-                <span className="mt-1">Jl. Sultan Agung No. 1, Jakarta Selatan</span>
+                <span className="mt-1">Lumajang</span>
               </li>
               <li className="flex items-center gap-4 group">
                 <div className="bg-white/5 p-2 rounded-lg group-hover:bg-red-600 transition-colors">
                     <Phone className="text-yellow-500 group-hover:text-white shrink-0 transition-colors" size={18} />
                 </div>
-                <span>+62 812-3456-7890</span>
+                <span>-</span>
               </li>
               <li className="flex items-center gap-4 group">
                 <div className="bg-white/5 p-2 rounded-lg group-hover:bg-red-600 transition-colors">
                     <Mail className="text-yellow-500 group-hover:text-white shrink-0 transition-colors" size={18} />
                 </div>
-                <span>order@seblaksultan.com</span>
+                <span>-</span>
               </li>
             </ul>
           </div>
